@@ -13,3 +13,7 @@ class ScrapeJobsItem(scrapy.Item):
     job_data = scrapy.Field()
     requirements = scrapy.Field()
 
+
+class ScrapeRefineReqsItem(scrapy.Item):
+    job_id = scrapy.Field()
+    requirements = scrapy.Field()

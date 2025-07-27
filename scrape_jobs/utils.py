@@ -100,3 +100,44 @@ class JobsUtils:
 						  f"{search_words}  (from file data/words.json)")
 
 		return search_words
+
+	def refine_skills(self) -> tuple[set, set]:
+		jobs_path = os.path.join(self.data_path, "it_jobs.jl")
+
+		re_jobs = set()
+		all_skills = set()
+
+		words = self.get_search_words()
+
+		if os.path.exists(jobs_path):
+			with open(jobs_path, encoding="utf-8") as f:
+				for line in f:
+					try:
+						item = json.loads(line)
+						all_skills.update(item["requirements"])
+						for word in words:
+							if word in item["requirements"]:
+								re_jobs.add(item["job_id"])
+					except Exception:
+						pass
+				self.logger.info(
+					f"In total {len(all_skills)} skills were allocated from "
+					"requirements of jobs loaded from it_jobs.jl"
+				)
+				print(f"In total {len(all_skills)} skills were found in requirements")
+		else:
+			self.logger.warning(
+				"File it_jobs.jl not found. You need to run first part "
+				"(scrapy crawl jobs -o data/it_jobs.jl)."
+			)
+
+		self.logger.warning(
+			f"Requirements for an additional {len(re_jobs)} jobs "
+			f"related to words: {words} will be checked"
+		)
+		print(
+			f"Parsing additional (only requirements) for {len(re_jobs)} jobs"
+			f" related to words: {words}"
+		)
+
+		return re_jobs, all_skills

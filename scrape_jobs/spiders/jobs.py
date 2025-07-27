@@ -153,5 +153,5 @@ class JobsSpider(scrapy.Spider):
 
 		except Exception:
 			# skip this ID job if error reading/waiting for this page
-			self.logger.warning(f"[Exesption] Can not to read: {response.url}")
+			self.logger.warning(f"[Exception] Can not to read: {response.url}")
 			return

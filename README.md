@@ -1,81 +1,74 @@
 # Work Scrape Analyze
 
-### Project description
+## 📌 Project Overview
+Automated scraping and analysis of IT job vacancies from [work.ua](https://work.ua/jobs-it/). The pipeline consists of:
 
-### Scraping & analysis IT vacancies on www.work.ua
+1. **Scraping job listings** marked as IT-related
+2. **Extracting requirements** from vacancy descriptions
+3. **Preparing data** for further analysis
 
-The project consists of 3 parts:
- - Part 1: collects information about vacancies positioned as IT vacancies on the website: work.ua
- - Part 2: collecting detailed information about the candidate's requirements in these vacancies
- - Part 3: preparation of the received information for analysis and its analysis
-
-### Project structure 
+## 🗂️ Folders and files Structure
 ```
 work-scrape-analyze/
-├── analysis/             # scripts and reports for analytics
-├── data/                 # saved data: here 'words.json' + scraping results
-├── scrape_jobs/          # Scrapy spiders and collection logic
+├── analysis/             # Scripts and reports
+├── data/                 # Output files and config (e.g. words.json)
+├── scrape_jobs/          # Scrapy spiders and utilities
 │   └── spiders/
-│   └── utils.py          # additional utilities for scraping
-├── scrapy.cfg            # configurations Scrapy
-├── scrapy_output.log     # logging
-├── requirements.txt      # projects requirements
-├── README.md             # description of project
+│   └── utils.py          
+├── scrapy.cfg            # Scrapy config file
+├── scrapy_output.log     # Spider logs
+├── requirements.txt      # Python dependencies
+├── README.md             
 ├── .gitignore            
-└── venv/                 # virtual environment (you must create it)
+└── venv/                 # Python virtual environment
 ```
-### Before start of project
-* `python -m venv venv`
-* `venv/Scripts/activate`
-* `pip install -r requirements.txt`
 
 
-## Part 1. Run the first spider 'jobs.py'
+## 🚀 Getting Started
+1. Create virtual environment:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # Or venv/Scripts/activate (Windows)
+   pip install -r requirements.txt
 
-### Put focused words into data/words.json. 
 
-Before the spider starts working, enter the words to focus the search, file: data/words.json. 
+## 🕷️ Part 1 — Run Spider jobs.py
 
-_1-3 words recommended._
+**Before running**, create a file data/words.json with 1–3 keywords to focus the search. <br>
+Examples:
 
-`This is because not all vacancies have clearly defined requirements, many requirements are simply 
-listed in the text of the vacancy. Therefore, several keywords allow the spider to focus attention 
-on these words, later this will be used as additional information for the second spider and in the analysis.
-If you write "Python", then not a single vacancy that requires knowledge of Python will be missed.`
+["Python"]   or  ["JavaScript", "CSS", "HTML"]
 
-> For example, it could be: ["Python"]   or  ["JavaScript", "CSS", "HTML"]
+`These keywords help detect vacancies with relevant skills hidden in the description text.`
+
 ### Run the spider 'jobs.py'
-Run the first spider 'jobs.py' in the 'scrape_jobs' from the root directory of the project.
-
 
 * `scrapy crawl jobs -o data/it_jobs.jl`
 
+### ⚙️ What Happens Behind the Scenes
 
-### How does it work?
-1. When you first launch the spider: view and collect all job IDs from the initial URL: https://www.work.ua/jobs-it/  
-    (At this stage, around 5,000 and more IDs vacancies may be collected)
-2. After successful completion of this part of the procedure, all IDs are saved to the file: 
-     data/cached_job_ids.json
-3. All subsequent runs will check for the presence of cached IDs, and if they exist, 
-     they will be used for further spider operation.
-4. The next step in the process is collecting information about each vacancy from the list of cached IDs.
- For this, information is read from:  https://www.work.ua/jobs/<jobs ID>/
- The data is written to the data/it_jobs.jl,  line by line.
-At this point, the process can be rerun as many times as necessary to collect 
-the vacancy. At each run, the cached IDs are compared with the saved vacancies,
-these statistics are displayed, and the collection process continues for 
-the remaining IDs.
-5. After the first spider has completed, the following files should be in the data/ folder:
+1. Collect job IDs from [work.ua/jobs-it/](https://work.ua/jobs-it)
+2. Save cached IDs to `data/cached_job_ids.json`
+3. Retrieve full vacancy details via those IDs
+    * Hint: The spider can be launched as many times as needed to get 
+   information about all vacancies in cached_job_ids.json
+4. Save collected vacancies to `data/it_jobs.jl`
+5. Compare collected jobs with cache on each run
+6. **Leave Firefox window open** while the spider runs!
+7. Logs available at `scrapy_output.log`
 
-`data/cached_job_ids.json`
+## 🕷️ Part 2 — Run Spider refine_reqs.py
 
-`data/it_jobs.jl`
+### Run the spider 'refine_reqs.py'
 
-`data/words.json`
-     _(you saved it before)_
+* `scrapy crawl refine_reqs -O data/refine_reqs.jl`
 
-6. While the spider is running, DO NOT close the Firefox browser window that opens.
-7. The execution logs can be viewed in the file: scrapy_output.log
+### ⚙️ What Happens Behind the Scenes
+
+1. Loads job entries from data/it_jobs.jl and selects only those containing the focus keywords from words.json
+2. Extracts the full set of requirements from each selected vacancy
+3. Scans the requirement text and identifies relevant skills using the focus keywords
+4. Saves the refined results into data/refine_reqs.jl — each line includes job ID and matched requirements
 
 ##  Tech
 
