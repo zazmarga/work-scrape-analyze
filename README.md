@@ -9,6 +9,27 @@ The project consists of 3 parts:
  - Part 2: collecting detailed information about the candidate's requirements in these vacancies
  - Part 3: preparation of the received information for analysis and its analysis
 
+### Project structure 
+```
+work-scrape-analyze/
+├── analysis/             # scripts and reports for analytics
+├── data/                 # saved data: here 'words.json' + scraping results
+├── scrape_jobs/          # Scrapy spiders and collection logic
+│   └── spiders/
+│   └── utils/            # additional functions for scraping
+├── scrapy.cfg            # configurations Scrapy
+├── scrapy_output.log     # logging
+├── requirements.txt      # projects requirements
+├── README.md             # description of project
+├── .gitignore            
+└── venv/                 # virtual environment (you create it)
+```
+### Before start of project
+* `python -m venv venv`
+* `venv/Scripts/activate`
+* `pip install -r requirements.txt`
+
+
 ## Part 1. Run the first spider 'jobs.py'
 
 ### Put focused words into data/words.json. 
@@ -26,9 +47,9 @@ If you write "Python", then not a single vacancy that requires knowledge of Pyth
 ### Run the spider 'jobs.py'
 Run the first spider 'jobs.py' in the 'scrape_jobs' from the root directory of the project.
 
-``
-scrapy crawl jobs -o data/it_jobs.jl
-``
+
+* `scrapy crawl jobs -o data/it_jobs.jl`
+
 
 ### How does it work?
 1. When you first launch the spider: view and collect all job IDs from the initial URL: https://www.work.ua/jobs-it/  
@@ -46,17 +67,12 @@ these statistics are displayed, and the collection process continues for
 the remaining IDs.
 5. After the first spider has completed, the following files should be in the data/ folder:
 
-``
-data/cached_job_ids.json
-``  
+`data/cached_job_ids.json`
 
-``
-data/it_jobs.jl
-``  
+`data/it_jobs.jl`
 
-``
-data/words.json 
-``  _you saved it before_
+`data/words.json`
+     _(you saved it before)_
 
 6. While the spider is running, DO NOT close the Firefox browser window that opens.
 7. The execution logs can be viewed in the file: scrapy_output.log
@@ -65,6 +81,7 @@ data/words.json
 
 * Scrapy FW
 * selenium, webdriver.Firefox
+* beautifulsoup4
 
 
 
