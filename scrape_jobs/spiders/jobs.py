@@ -8,11 +8,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 from scrape_jobs.items import ScrapeJobsItem
-from scrape_jobs.utils.add_requirements import additional_reqs
-from scrape_jobs.utils.cached_jobs_ids import cached_jobs_ids
-from scrape_jobs.utils.parsed_job_ids import parsed_job_ids
-from scrape_jobs.utils.search_words import get_search_words
-from scrape_jobs.utils.set_up_user_agent import user_agent_options
+from scrape_jobs.utils import JobsUtils
 
 
 class JobsSpider(scrapy.Spider):
@@ -27,14 +23,15 @@ class JobsSpider(scrapy.Spider):
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
+		self.utils = JobsUtils()
 		# setting up driver()
-		self.driver = webdriver.Firefox(options=user_agent_options())
+		self.driver = webdriver.Firefox(options=self.utils.user_agent_options())
 		# avoid collecting existing jobs
-		self.existing_ids = parsed_job_ids()
+		self.existing_ids = self.utils.parsed_job_ids()
 		# get set of cached jobs_ids
-		self.cached_job_ids = cached_jobs_ids()
+		self.cached_job_ids = self.utils.cached_jobs_ids()
 		# get words to focus the search (file: data/words.json)
-		self.search_words = get_search_words()
+		self.search_words = self.utils.get_search_words()
 
 	def close(self, reason: str):
 		if hasattr(self, "driver"):
@@ -139,7 +136,7 @@ class JobsSpider(scrapy.Spider):
 			for word in self.search_words:
 				if word not in requirements:
 					# checking each word in page text one by one
-					reqs_from_text = additional_reqs(html, [word])
+					reqs_from_text = self.utils.additional_reqs(html, [word])
 
 					if reqs_from_text:
 						req_set = set(requirements)

@@ -16,13 +16,13 @@ work-scrape-analyze/
 ├── data/                 # saved data: here 'words.json' + scraping results
 ├── scrape_jobs/          # Scrapy spiders and collection logic
 │   └── spiders/
-│   └── utils/            # additional functions for scraping
+│   └── utils.py          # additional utilities for scraping
 ├── scrapy.cfg            # configurations Scrapy
 ├── scrapy_output.log     # logging
 ├── requirements.txt      # projects requirements
 ├── README.md             # description of project
 ├── .gitignore            
-└── venv/                 # virtual environment (you create it)
+└── venv/                 # virtual environment (you must create it)
 ```
 ### Before start of project
 * `python -m venv venv`
