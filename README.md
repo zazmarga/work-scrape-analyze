@@ -10,23 +10,24 @@ Automated scraping and analysis of IT job vacancies from [work.ua](https://work.
 ## 🗂️ Folders and files Structure
 ```
 work-scrape-analyze/
-├── analysis/             # Scripts, utilities and reports
+├── analysis/                   # Scripts, utilities and reports
 │   └── app/
 │     └── main.ipynb
 │   └── utils.py
-├── data/                 # Output files and words.json
+│   └── skills_by_classe.json   # Skills by classe (can change it)
+├── data/                       # Output files and words.json
 │   └── words.json
-├── scrape_jobs/          # Scrapy spiders and utilities
+├── scrape_jobs/                # Scrapy spiders and utilities
 │   └── spiders/
 │     └── jobs.py
 │     └── refine_reqs.py
 │   └── utils.py          
-├── scrapy.cfg            # Scrapy config file
-├── scrapy_output.log     # Spider logs
-├── requirements.txt      # Python dependencies
+├── scrapy.cfg                  # Scrapy config file
+├── scrapy_output.log           # Spider logs
+├── requirements.txt            # Python dependencies
 ├── README.md             
 ├── .gitignore            
-└── venv/                 # Python virtual environment
+└── venv/                       # Python virtual environment
 ```
 
 
