@@ -10,10 +10,16 @@ Automated scraping and analysis of IT job vacancies from [work.ua](https://work.
 ## 🗂️ Folders and files Structure
 ```
 work-scrape-analyze/
-├── analysis/             # Scripts and reports
-├── data/                 # Output files and config (e.g. words.json)
+├── analysis/             # Scripts, utilities and reports
+│   └── app/
+│     └── main.ipynb
+│   └── utils.py
+├── data/                 # Output files and words.json
+│   └── words.json
 ├── scrape_jobs/          # Scrapy spiders and utilities
 │   └── spiders/
+│     └── jobs.py
+│     └── refine_reqs.py
 │   └── utils.py          
 ├── scrapy.cfg            # Scrapy config file
 ├── scrapy_output.log     # Spider logs
@@ -25,11 +31,12 @@ work-scrape-analyze/
 
 
 ## 🚀 Getting Started
-1. Create virtual environment:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # Or venv/Scripts/activate (Windows)
-   pip install -r requirements.txt
+
+Create virtual environment:
+
+*    `python -m venv venv`
+*    `source venv/bin/activate`  # Or `venv/Scripts/activate` (Windows)
+*    `pip install -r requirements.txt`
 
 
 ## 🕷️ Part 1 — Run Spider jobs.py
@@ -70,14 +77,42 @@ Examples:
 3. Scans the requirement text and identifies relevant skills using the focus keywords
 4. Saves the refined results into data/refine_reqs.jl — each line includes job ID and matched requirements
 
-##  Tech
+## 📊 Part 3 — Running main.ipynb in Jupyter Notebook
 
-* Scrapy FW
-* selenium, webdriver.Firefox
-* beautifulsoup4
+### Objective
+
+This project analyzes skill requirements in job vacancies related to developer roles.
+
+### Instructions
+
+Ensure that Jupyter Notebook is installed — it’s included in requirements.txt.
+
+To launch the notebook:
+
+* `cd analysis/app`
+* `jupyter notebook`
+
+Then, open the file `main.ipynb`.
+
+Inside the notebook, you’ll find a detailed breakdown of the entire analysis pipeline.
+
+## 🧑‍💻 Technologies Used
+
+* Scrapy Framework
+* Selenium + webdriver.Firefox
+* BeautifulSoup4
+* Jupyter Notebook
+* pandas
+* numpy
+* matplotlib
 
 
+## 📎 Examples
 
+### Example 1
+#### Input words.json: ["Python"]
+![only_py.png](only_py.png)
 
-
-
+### Example 2
+#### Input words.json: ["Python", "Django", "REST API"]
+![3_skills.png](3_skills.png)

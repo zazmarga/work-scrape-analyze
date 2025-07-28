@@ -16,7 +16,6 @@ class RefineReqsSpider(scrapy.Spider):
 		"https://www.work.ua/jobs/"
 	]
 	base_url = "https://www.work.ua/jobs/"
-	# rejob_ids = set()
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
