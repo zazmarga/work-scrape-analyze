@@ -29,6 +29,7 @@ Thumbs.db
 
 # Virtual environment
 venv/
+.venv/
 .env
 
 .ipynb_checkpoints/

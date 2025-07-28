@@ -3,6 +3,8 @@ import json
 import pandas as pd
 import numpy as np
 
+from pathlib import Path
+
 
 def extract_salary(salary: str):
     if pd.isna(salary):
@@ -24,35 +26,36 @@ def extract_salary(salary: str):
 
 
 def classify_skills(skill_list):
+	current_file_dir = Path(__file__).parent
+	skills_path = current_file_dir / "skills_by_class.json"
 
-    with open("skills_by_classe.json", "r", encoding="utf-8") as f:
-        skills_data = json.load(f)
+	with open(skills_path, "r", encoding="utf-8") as f:
+		skills_data = json.load(f)
 
-    tech_skills = set(skills_data["Tech"])
-    soft_skills = set(skills_data["Soft"])
-    general_skills = set(skills_data["General"])
+	tech_skills = set(skills_data["Tech"])
+	soft_skills = set(skills_data["Soft"])
+	general_skills = set(skills_data["General"])
 
+	tech = []
+	soft = []
+	general = []
+	not_classified = []
 
-    tech = []
-    soft = []
-    general = []
-    not_classified = []
-
-    for skill in skill_list:
-        if skill in tech_skills:
-            tech.append(skill)
-        elif skill in soft_skills:
-            soft.append(skill)
-        elif skill in general_skills:
-            general.append(skill)
-        else:
-            not_classified.append(skill)
-    return pd.Series(
-        {"Tech": tech, 
-         "Soft": soft, 
-         "General": general, 
-         "Not_classified": not_classified}
-        )
+	for skill in skill_list:
+		if skill in tech_skills:
+			tech.append(skill)
+		elif skill in soft_skills:
+			soft.append(skill)
+		elif skill in general_skills:
+			general.append(skill)
+		else:
+			not_classified.append(skill)
+	return pd.Series(
+		{"Tech": tech,
+		 "Soft": soft,
+		 "General": general,
+		 "Not_classified": not_classified}
+	)
 
 
 # if __name__ == "__main__":
