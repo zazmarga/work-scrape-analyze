@@ -16,6 +16,7 @@ class JobsSpider(scrapy.Spider):
 	allowed_domains = ["www.work.ua"]
 	start_urls = [
 		"https://www.work.ua/jobs-it/"
+#		"https://www.work.ua/jobs-design-art/"    # experiment
 	]
 	base_url = "https://www.work.ua/"
 	job_ids = set()
@@ -63,11 +64,11 @@ class JobsSpider(scrapy.Spider):
 	def parse_list_job_ids(self):
 		print(
 			f"\n The {len(self.job_ids)} vacancies were found that are positioned "
-			f"as vacancies in the IT sector ({self.start_urls[0]}).")
+			f"as vacancies in the sector ({self.start_urls[0]}).")
 		print("Jobs: ", end="", flush=True)
 		self.logger.info(
 			f"***** {len(self.job_ids)} vacancies were found that are positioned"
-			" as vacancies in the IT sector.")
+			" as vacancies in the sector.")
 
 		for job_id in self.job_ids:
 			# do not scrape existing in it_jobs.jl

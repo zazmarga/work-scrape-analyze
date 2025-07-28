@@ -14,7 +14,7 @@ work-scrape-analyze/
 │   └── app/
 │     └── main.ipynb
 │   └── utils.py
-│   └── skills_by_classe.json   # Skills by classe (can change it)
+│   └── skills_by_class.json    # Skills by class (can change it)
 ├── data/                       # Output files and words.json
 │   └── words.json
 ├── scrape_jobs/                # Scrapy spiders and utilities
@@ -26,8 +26,7 @@ work-scrape-analyze/
 ├── scrapy_output.log           # Spider logs
 ├── requirements.txt            # Python dependencies
 ├── README.md             
-├── .gitignore            
-└── venv/                       # Python virtual environment
+└── .gitignore            
 ```
 
 
@@ -35,7 +34,7 @@ work-scrape-analyze/
 
 Create virtual environment:
 
-*    `python -m venv venv`
+*    `python -m venv .venv`
 *    `source venv/bin/activate`  # Or `venv/Scripts/activate` (Windows)
 *    `pip install -r requirements.txt`
 
@@ -112,8 +111,22 @@ Inside the notebook, you’ll find a detailed breakdown of the entire analysis p
 
 ### Example 1
 #### Input words.json: ["Python"]
+about 5000 vacancies
 ![only_py.png](only_py.png)
 
 ### Example 2
 #### Input words.json: ["Python", "Django", "REST API"]
+about 5000 vacancies
 ![3_skills.png](3_skills.png)
+
+### Example 3
+As an experiment, I replaced the category used for extracting 
+information with the one from work.ua: _"Дизайн, творчість"_ [www.work.ua/jobs-design-art/](https://www.work.ua/jobs-design-art/)
+
+The results were successfully obtained. However, based on 
+the **"Not classified"** diagram, it's clear that only additional configuration 
+is needed of the list of skills in the `analysis/skills_by_class.json` file.
+
+#### Input words.json: ["Figma"]
+about 2000 vacancies
+![exp.png](exp.png)
