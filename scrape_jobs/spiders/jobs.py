@@ -16,7 +16,6 @@ class JobsSpider(scrapy.Spider):
 	allowed_domains = ["www.work.ua"]
 	start_urls = [
 		"https://www.work.ua/jobs-it/"
-#		"https://www.work.ua/jobs-design-art/"    # experiment
 	]
 	base_url = "https://www.work.ua/"
 	job_ids = set()

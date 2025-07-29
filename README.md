@@ -35,7 +35,7 @@ work-scrape-analyze/
 Create virtual environment:
 
 *    `python -m venv .venv`
-*    `source venv/bin/activate`  # Or `venv/Scripts/activate` (Windows)
+*    `source .venv/bin/activate`  # Or `.venv/Scripts/activate` (Windows)
 *    `pip install -r requirements.txt`
 
 
